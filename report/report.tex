@@ -1,0 +1,275 @@
+\documentclass[a4paper,12pt]{extarticle}
+% !TEX encoding = IBM866
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{listings}
+\usepackage[cp866]{inputenc}
+\usepackage{amsthm,amsmath,amsfonts}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{algorithm2e}
+\usepackage{array}
+\usepackage[final]{graphicx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{moreverb}
+\usepackage{multirow}
+\usepackage[cp866]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsthm,amsmath,amsfonts,amssymb}
+\usepackage[final]{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{subcaption}
+\usepackage{colortbl}
+\geometry
+{
+	a4paper,
+	total={210mm,297mm},
+	left=20mm,
+	right=20mm,
+	top=25mm,
+	bottom=20mm,
+}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[final]{showkeys}
+
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{dot}{. }
+\captionsetup{labelsep=dot}
+
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{python}
+\usepackage{listings}
+\lstloadlanguages{Python}
+\usepackage{bm}
+
+
+
+\begin{document}
+	
+	
+		\begin{titlepage}
+		
+		\begin{center}
+			\centerline{\Large\rm Министерство науки и высшего образования}
+			\centerline{\Large\rm Федеральное государственное бюджетное образовательное}
+			\centerline{\Large\rm учреждение высшего образования}
+			\centerline{\Large\rm <<Московский государственный технический университет}
+			\centerline{\Large\rm имени~Н.~Э.~Баумана}
+			\centerline{\Large\rm (национальный исследовательский университет)>>}
+			\centerline{\Large\rm (МГТУ~им.~Н.~Э.~Баумана)}
+			\hrulefill
+		\end{center}
+		
+		\begin{figure}[h!]
+			\centering
+%			\includegraphics[height=0.4\linewidth]{picture.0}
+		\end{figure}
+		
+		\begin{center}
+			\centerline{\Large\rm Факультет <<Фундаментальные науки>>}
+			\centerline{\Large\rm Кафедра ФН1 <<Высшая математика>>}
+		\end{center}
+		
+		\begin{center}
+			\textsc{\textbf{\Huge Отчет}}\\
+			\textsc{\textbf{\large по учебной практике за 5 семестр}}\\
+		\end{center}
+		
+		\vspace{3em}
+		
+		{
+			\large
+			\hbox to 17cm {Преподаватель \hspace{45pt} \hrulefill \hspace{60pt} Кравченко~О.~В.}
+			\vspace{-7pt}
+			\hbox{{\small\it \hspace{178pt} подпись, инициалы}}
+			\hbox{}
+			\hbox to 17cm {Студент группы ФН1--51Б \hrulefill \hspace{60pt} Меситов~Д.~М.}
+			\vspace{-7pt}
+			\hbox{{\small\it \hspace{178pt} подпись, инициалы}}
+		}
+		
+		
+		\vspace{\fill}
+		
+		\begin{center}
+			\large	Москва \\2020
+		\end{center}
+		
+	\end{titlepage}
+
+    \setcounter{page}{2}
+    \tableofcontents
+    \vspace{\baselineskip}
+   
+    
+    \newpage
+    \section{Задание}
+     Решить сингулярную двуточечную краевую задачу методом конечных разностей
+    $$
+    \varepsilon y''(x) + p(x)y'(x) + q(x)y(x) + f(x) = 0,\quad x\in[0,\,1],
+    $$
+    со смешанными граничными условиями
+    $$
+    \begin{array}{rcl}
+    -\alpha_1y'(0) + \alpha_2y(0)			&=&	\gamma_1,\\[8pt]
+    \phantom{-}\beta_1y'(1) + \beta_2y(1)	&=&	\gamma_2,
+    \end{array}
+    $$
+    при различных значениях параметра 
+    $$
+    \varepsilon=1,~0.1,~0.01,~0.001.
+    $$
+    и функциях
+    $$
+    p(x)=x^{2}+x,~~~\\[8pt]
+    q(x)=x-x^{2},~~~\\[8pt]
+    f(x)=x^{3}-\sqrt{x^{2}+x}
+    $$
+    
+    \section{Описание метода}
+    Поставленная краевая задача решается с помощью перехода от исходной задачи к новой, записанной в конечно-разностной форме. Тогда решение новой задачи будет являться приближенным решением исходной задачи. В силу того, что первая и вторая производные, входящие в уравнение и в краевые условия, будут заменены приближенными конечно-разностными формулами, решения с применением метода конечных разностей получается не в виде непрерывной функции $y(x)$, а виде таблицы ее значений в отдельных точках. Для этого разобьем отрезок $[0, 1]$ на $n$ частей  так, чтобы $x_0 = 0, x_n = 1, x_{i+1} = x_i + h, h = (b-a)/n$. Наша задача – найти значения функции $y(x)$ в точках $x_k, k=0...n$. Для того, чтобы перейти от исходной задачи к конечно-разностной, надо получить формулы для представления первой и второй производных в конечно-разностном виде. Они получаются, если применить разложение функции $y(x)$ в окрестности некоторой точки $x_k$ в ряд Тейлора, ограничиваясь вторыми производными:
+    $$
+    y(x_i + h) \approx y(x_i) + hy'(x_i) + \frac{h^2}{2}y''(x_i)
+    $$
+    $$
+    y(x_i - h) \approx y(x_i) - hy'(x_i) + \frac{h^2}{2}y''(x_i)
+    $$
+    Складывая (вычитая) эти выражения, получим приближенные выражения для второй (первой) производных:
+    $$
+    y''(x_i) \approx \frac{y(x_i + h) - 2y(x_i) + y(x_i - h)}{h^2}
+    $$
+    $$
+    y'(x_i) \approx \frac{y(x_i + h) - y(x_i - h)}{2h}
+    $$
+    Обозначим $y(x_i) = y_i,~ y(x_i +h) = y_{i+1},~ y(x_i -h) = y_{i-1}$, а также $p(x_i) = p_i, ~ q(x_i) = q_i, ~ f(x_i) = f_i$.\\
+    В итоге, получим для узловых точек сетки:
+    \begin{equation}
+        \varepsilon \frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} + p_i \frac{y_{i+1}-y_{i-1}}{2h} + q_i y_i = -f_i,  ~~ i = 1...n-1
+    \end{equation}\\
+    И, для краевых условий:
+    \begin{equation}
+        -\alpha_1\frac{y_{1}-y_{0}}{h} + \alpha_2 y_0 = \gamma_1
+    \end{equation}
+    \begin{equation}
+        \beta_1\frac{y_{n}-y_{n-1}}{h} + \beta_2 y_n = \gamma_2
+    \end{equation}\\
+    Мы получили СЛАУ с неизвестными $y_0...y_n$, матрица которой имеет трёхдиагональный вид. Такую систему можено решить, например, методом прогонки.
+    
+    \section{Листинг кода}
+    \subsection{Метод конечных разностей}
+    \begin{lstlisting}
+    clc;
+    eps = 1;
+    a1 = 1;
+    a2 = 0;
+    b1 = 1;
+    b2 = 0;
+    g1 = 5;
+    g2 = 8;
+    h = 0.05;
+    
+    p = @(x)(x * x + x);
+    q = @(x)(x - x * x);
+    f = @(x)(x * x * x - sqrt(x * x + x));
+    
+    x0 = 0;
+    x1 = 1;
+    
+    n = round(abs(x1 - x0) / h);
+    X = zeros(n + 1, 1);
+    F = zeros(n + 1, 1);
+    A = zeros(n + 1, n + 1);
+    
+    for i = 1:n+1
+        X(i) = x0 + (i - 1) * h;
+    end
+    for i = 2:n
+        A(i, i)   = ((-2*eps) / (h * h)) + q(X(i));
+        A(i, i-1) = (eps / (h * h)) - p(X(i)) / (2 * h);
+        A(i, i+1) = (eps / (h * h)) + p(X(i)) / (2 * h);
+        F(i)      = -f(X(i));
+    end
+    
+    F(1)   = g1;
+    F(n+1) = g2;
+    A(1, 1) = (a1 / h) + a2;
+    A(1, 2) = -a1 / h;
+    A(n + 1, n + 1) = (b1 / h) + b2;
+    A(n + 1, n)     = -b1 / h;
+    
+    Y = shuttleNew(A, F);
+    plot(X, Y);
+    \end{lstlisting}
+    
+    \subsection{Метод прогонки}
+    \begin{lstlisting}
+    function X = shuttleNew(A, B)
+
+    n = size(A,1);
+    a=diag(A);
+    b=diag(A,1);
+    c=diag(A,-1);
+    P=zeros(n,1);
+    Q=zeros(n+1,1);
+    X=zeros(n,1);
+    
+    P(2)= b(1)/(-a(1));
+    Q(2)= B(1)/(a(1));
+    
+    for i = 2:(n-1)
+        P(i+1)=b(i)/(-a(i)-c(i-1)*P(i));
+        Q(i+1)=(-B(i)+c(i-1)*Q(i))/(-a(i)-c(i-1)*P(i));
+    end
+    
+    Q(n+1)=(-B(n)+c(n-1)*Q(n))/(-a(n)-c(n-1)*P(n));
+    X(n)=Q(n+1);
+    
+    for i = (n-1):-1:1
+        X(i) = P(i+1)*X(i+1)+ Q(i+1);
+    end
+    
+    end
+    \end{lstlisting}
+    
+    \section{Результаты работы программы}
+   
+    \begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=\linewidth]{pics/e1.jpg} 
+    \caption{$\varepsilon=1, ~~ h = 0.05$}
+    \label{fig:subim1}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=\linewidth]{pics/e01.jpg} 
+    \caption{$\varepsilon=0.1, ~~ h = 0.05$}
+    \label{fig:subim1}
+    \end{subfigure}
+    \end{figure}
+    
+    \begin{figure}[H]
+    \ContinuedFloat
+    \begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=\linewidth]{pics/e001.jpg} 
+    \caption{$\varepsilon=0.01, ~~ h = 0.05$}
+    \label{fig:subim1}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=\linewidth]{pics/e0001.jpg} 
+    \caption{$\varepsilon=0.001, ~~ h = 0.05$}
+    \label{fig:subim1}
+    \end{subfigure}
+    
+    \end{figure}
+    
+    Заметим, однако, что с уменьшением параметра $\varepsilon$ матрица СЛАУ становится всё хуже обусловленной, а это в свою очередь приводит к большим погрешностям в ответе. Для сингулярных задач используются особые модифицированные алгоритмы, в том числе и модифицированные методы конечных разностей.
+    
+    
+
+\end{document}
