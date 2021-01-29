@@ -294,16 +294,19 @@
     решение для задачи при значении параметра $\varepsilon = 1$.
     Изобразим его на одном графике с решением, полученным методом
     конечных разностей.
-    
-    \begin{center}
+
     \begin{figure}[H]
-    \begin{subfigure}{0.75\textwidth}
+    \begin{subfigure}{0.5\textwidth}
     \includegraphics[width=\linewidth]{pics/compare.jpg} 
     \caption{Синим -- точное решение, оранжевым -- МКЭ с $\varepsilon=1, ~~ h = 0.001 $}
     \label{fig}
     \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+    \includegraphics[width=\linewidth]{pics/compare_2.jpg} 
+    \caption{Синим -- точное решение, оранжевым -- МКЭ с $\varepsilon=1, ~~ h = 0.0001 $}
+    \label{fig}
+    \end{subfigure}
     \end{figure}
-    \end{center}
     
     Для других значений $\varepsilon$ точное решение найти не удаётся.
     Для них только проанализируем, как меняется решение в зависимости от шага сетки: $h = \frac{1}{2}^k, ~~ k = 5...10$. (Чем линии менее прозрачные, тем меньше шаг сетки)
